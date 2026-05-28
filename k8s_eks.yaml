@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
       - name: backend
-        image: backend:latest
-        imagePullPolicy: Never
+        image: maximilianoastor/backend:2.0
+        imagePullPolicy: Always
         ports:
         - containerPort: 3000
         resources:
@@ -53,8 +53,8 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: frontend:latest
-        imagePullPolicy: Never
+        image: maximilianoastor/frontend:2.0
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
         resources:
@@ -70,6 +70,7 @@ kind: Service
 metadata:
   name: frontend-service
 spec:
+  type: LoadBalancer
   selector:
     app: frontend
   ports:

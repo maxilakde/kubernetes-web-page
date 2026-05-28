@@ -1,0 +1,5 @@
+La aplicación full stack (Nginx + Express) se migró de Minikube a EKS. En local, las imágenes se construían con `minikube docker-env` y se desplegaban con Services ClusterIP e `imagePullPolicy: Never`. Para EKS, las imágenes se publicaron en Docker Hub bajo `maximilianoastor/backend:2.0` y `maximilianoastor/frontend:2.0`, y el manifiesto `k8s_eks.yaml` usa `imagePullPolicy: Always`.
+
+El backend permanece como Service ClusterIP (acceso solo interno al cluster). El frontend se expone con un Service tipo LoadBalancer, que provisiona un Elastic Load Balancer de AWS. Nginx en el frontend proxifica las peticiones `/api/` al Service `backend-service:3000` usando el DNS interno de Kubernetes, sin cambios en el código de la aplicación.
+
+Se desplegaron 4 réplicas del frontend y 1 del backend.
